@@ -1,0 +1,20 @@
+body {
+  margin: 0;
+  font-family: 'noto sans';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: rgb(61, 53, 189);
+  background: linear-gradient(90deg, #d299c2 0%, #fef9d7 100%);
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 2.5em;
+  color: #203b61;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
