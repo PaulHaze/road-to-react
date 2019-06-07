@@ -13,7 +13,7 @@ export default function BookDetail({
   comments,
   removeBook
 }) {
-  const handleClick = id => removeBook(id);
+  const handleClick = () => removeBook(id);
   return (
     <TableRow>
       <TableCell component="th" scope="row">
@@ -26,7 +26,15 @@ export default function BookDetail({
       <TableCell align="center">{comments}</TableCell>
       <TableCell>
         <Button
-          onClick={() => handleClick(id)}
+          style={{
+            maxWidth: '40px',
+            maxHeight: '40px',
+            minWidth: '30px',
+            minHeight: '30px',
+            padding: '5px',
+            backgroundColor: '#93252d'
+          }}
+          onClick={handleClick}
           variant="contained"
           color="secondary"
           size="small"

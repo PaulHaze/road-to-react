@@ -17,9 +17,13 @@ export default class BookTable extends Component {
     });
   };
   render() {
+    const { list } = this.state;
     return (
       <div>
-        <BookList list={this.state.list} removeBook={this.removeBook} />
+        <BookList list={list} removeBook={this.removeBook} />
+        {list.length === 0 && (
+          <h1 className="text-center pt-5">Nothing To Display</h1>
+        )}
       </div>
     );
   }
