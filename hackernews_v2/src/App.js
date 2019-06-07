@@ -1,14 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import BookTable from './components/BookTable';
 import './App.css';
-import { list } from './data/list';
-import BookList from './components/BookTable';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,10 +15,10 @@ export default function App() {
   const classes = useStyles();
 
   return (
-    <Paper elevation={15} className={`App ${classes.root}`} rounded>
+    <Paper elevation={15} className={`App ${classes.root}`}>
       <h1 className=" text-center">Book List</h1>
       <hr />
-      <BookList list={list} />
+      <BookTable />
     </Paper>
   );
 }
