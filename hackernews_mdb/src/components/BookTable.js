@@ -9,13 +9,14 @@ export default class BookTable extends Component {
     this.state = {
       list
     };
+    this.removeBook = this.removeBook.bind(this);
   }
-  removeBook = id => {
+  removeBook(id) {
     const newList = this.state.list.filter(x => x.objectID !== id);
     this.setState({
       list: newList
     });
-  };
+  }
   render() {
     const { list } = this.state;
     return (
