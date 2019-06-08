@@ -26,6 +26,9 @@ table.table thead th {
   font-size: 0.8em;
   font-weight: 400;
 }
+.table td {
+  vertical-align: middle;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

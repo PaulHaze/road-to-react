@@ -2,9 +2,13 @@ import React from 'react';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import BookDetail from './BookDetail';
 
-const BookList = ({ list, removeBook, isSearched, searchTerm }) => (
+const isSearched = searchTerm => item =>
+  item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  item.author.toLowerCase().includes(searchTerm.toLowerCase());
+
+const BookList = ({ list, removeBook, searchTerm }) => (
   <MDBTable>
-    <MDBTableHead>
+    <MDBTableHead style={{ justifyContent: 'space-between' }}>
       <tr className="grey-text">
         <th scope="col">TITLE</th>
         <th scope="col">AUTHOR</th>

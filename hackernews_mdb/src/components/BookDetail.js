@@ -1,5 +1,6 @@
 import React from 'react';
 import { MDBBtn } from 'mdbreact';
+import './BookDetail.css';
 
 const BookDetail = ({
   url,
@@ -10,7 +11,7 @@ const BookDetail = ({
   comments,
   removeBook
 }) => (
-  <tr className="text-mdb-color darken-1">
+  <tr className="text-mdb-color darken-1 mt-5">
     <td>
       <span>
         <a href={url}> {title}</a>
@@ -26,10 +27,10 @@ const BookDetail = ({
           maxHeight: '40px',
           minWidth: '30px',
           minHeight: '30px',
-          padding: '5px'
+          padding: '5px',
+          verticalAlign: 'bottom'
         }}
         onClick={() => removeBook(id)}
-        className="BookDetail-btn mt-0"
         color="danger"
         outline
         size="sm"

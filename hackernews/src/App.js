@@ -68,7 +68,11 @@ class App extends Component {
             <h5>Search</h5>
           </Search>
 
-          <Table list={result.hits} pattern={searchTerm} onDismiss={this.onDismiss} />
+          <Table
+            list={result.hits}
+            pattern={searchTerm}
+            onDismiss={this.onDismiss}
+          />
         </div>
 
         <div className="interactions">
@@ -108,7 +112,10 @@ const Table = ({ list, pattern, onDismiss }) => (
         <span style={{ width: '20%' }}> {item.num_comments} comments </span>
         <span style={{ width: '10%' }}> Rating: {item.points} </span>
         <span style={{ width: '10%' }}>
-          <Button className="button-inline" onClick={() => onDismiss(item.objectID)}>
+          <Button
+            className="button-inline"
+            onClick={() => onDismiss(item.objectID)}
+          >
             <i className="material-icons medium">cancel</i>
           </Button>
         </span>
