@@ -2,7 +2,7 @@ import React from 'react';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import BookDetail from './BookDetail';
 
-const BookList = ({ list, removeBook }) => (
+const BookList = ({ list, removeBook, isSearched, searchTerm }) => (
   <MDBTable>
     <MDBTableHead>
       <tr className="grey-text">
@@ -12,13 +12,13 @@ const BookList = ({ list, removeBook }) => (
           RATING
         </th>
         <th className="text-center" scope="col">
-          <i class="fas fa-comment-alt" />
+          <i className="fas fa-comment-alt" />
         </th>
         <th scope="col" />
       </tr>
     </MDBTableHead>
     <MDBTableBody>
-      {list.map(book => (
+      {list.filter(isSearched(searchTerm)).map(book => (
         <BookDetail
           key={book.objectID}
           id={book.objectID}

@@ -36,7 +36,7 @@ const BookDetail = ({
           outline
           size="sm"
         >
-          <i class="fas fa-minus-circle" />
+          <i className="fas fa-minus-circle" />
         </MDBBtn>
       </td>
     </tr>
