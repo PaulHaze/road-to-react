@@ -38,7 +38,9 @@ export default class BookTable extends Component {
     const { list, searchTerm } = this.state;
     return (
       <div>
-        <Search onSearchChange={this.onSearchChange} />
+        <Search onSearchChange={this.onSearchChange} searchTerm={searchTerm}>
+          Type to filter the results
+        </Search>
         <hr />
         <BookList
           list={list}
