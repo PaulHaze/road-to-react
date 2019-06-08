@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BookList from './BookList';
+import NewsList from './NewsList';
 
 import { list } from '../data/list';
 import Search from './Search';
@@ -16,10 +17,7 @@ const isSearched = searchTerm => item =>
   item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
   item.author.toLowerCase().includes(searchTerm.toLowerCase());
 
-export default class BookTable extends Component {
-  static defaultProps = {
-    list: list
-  };
+export default class HackerNews extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -56,7 +54,7 @@ export default class BookTable extends Component {
     });
   }
   removeStory(id) {
-    const newResults = this.state.result.filter(x => x.hits.objectID !== id);
+    const newResults = this.state.result;
     this.setState({
       result: newResults
     });
@@ -69,14 +67,24 @@ export default class BookTable extends Component {
           Type to filter the results
         </Search>
         <hr />
-        <BookList
+        <h1 className="text-center">Results:</h1>
+        {/* <BookList
           result={result}
           list={list}
           removeBook={this.removeBook}
           removeStory={this.removeStory}
           searchTerm={searchTerm}
           isSearched={isSearched}
-        />
+        /> */}
+        {result && (
+          <NewsList
+            result={result.hits}
+            removeStory={this.removeStory}
+            searchTerm={searchTerm}
+            isSearched={isSearched}
+          />
+        )}
+
         {list.length === 0 && (
           <h1 className="text-center pt-5">Nothing To Display</h1>
         )}
