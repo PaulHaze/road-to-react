@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import NewsList from './NewsList';
+import BookList from '../BookList';
+import NewsList from '../NewsList';
 
-import { list } from '../data/list';
-import Search from './Search';
+import { list } from '../../data/list';
+import Search from '../Search';
 
 // API constants
-const DEFAULT_QUERY = 'react';
+const DEFAULT_QUERY = 'redux';
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
@@ -25,48 +26,56 @@ export default class HackerNews extends Component {
       searchTerm: DEFAULT_QUERY
     };
     this.setSearchTopStories = this.setSearchTopStories.bind(this);
+    this.removeBook = this.removeBook.bind(this);
     this.removeStory = this.removeStory.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
-    this.searchApi = this.searchApi.bind(this);
-  }
-  componentDidMount() {
-    this.searchApi();
-  }
-  searchApi() {
-    const { searchTerm } = this.state;
-    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
-      .then(response => response.json())
-      .then(result => this.setSearchTopStories(result))
-      .catch(error => error);
   }
   setSearchTopStories(result) {
     this.setState({
       result
     });
   }
+  componentDidMount() {
+    const { searchTerm } = this.state;
+    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+      .then(response => response.json())
+      .then(result => this.setSearchTopStories(result))
+      .catch(error => error);
+  }
   onSearchChange(term) {
     this.setState({
       searchTerm: term
     });
   }
-  removeStory(id) {
-    const newHits = this.state.result.hits.filter(x => x.objectID !== id);
-    // use spread operator to pass just the updated part
-    // of the object
+  removeBook(id) {
+    const newList = this.state.list.filter(x => x.objectID !== id);
     this.setState({
-      result: { ...this.state.result, hits: newHits }
+      list: newList
+    });
+  }
+  removeStory(id) {
+    const newResults = this.state.result.hits.filter(x => x.objectID !== id);
+    this.setState({
+      result: newResults
     });
   }
   render() {
-    const { result, searchTerm } = this.state;
-    // if (!result) {
-    //   return null;
-    // }
+    const { list, result, searchTerm } = this.state;
     return (
       <div>
-        <Search onSearchChange={this.onSearchChange} searchTerm={searchTerm} />
+        <Search onSearchChange={this.onSearchChange} searchTerm={searchTerm}>
+          Type to filter the results
+        </Search>
         <hr />
         <h1 className="text-center">Results:</h1>
+        <BookList
+          result={result}
+          list={list}
+          removeBook={this.removeBook}
+          removeStory={this.removeStory}
+          searchTerm={searchTerm}
+          isSearched={isSearched}
+        />
         {result && (
           <NewsList
             result={result.hits}
@@ -74,6 +83,10 @@ export default class HackerNews extends Component {
             searchTerm={searchTerm}
             isSearched={isSearched}
           />
+        )}
+
+        {list.length === 0 && (
+          <h1 className="text-center pt-5">Nothing To Display</h1>
         )}
       </div>
     );

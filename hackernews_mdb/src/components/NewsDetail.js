@@ -13,7 +13,10 @@ const NewsDetail = ({
   <tr className="text-mdb-color darken-1 mt-5">
     <td>
       <span>
-        <a href={url}> {title}</a>
+        <a href={url} target="blank">
+          {' '}
+          {title}
+        </a>
       </span>
     </td>
     <td>{author}</td>
