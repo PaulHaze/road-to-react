@@ -16,7 +16,9 @@ const NewsDetail = ({
   <TableRow>
     <TableCell component="th" scope="row">
       <span>
-        <a href={url}>{title}</a>
+        <a href={url} target="blank">
+          {title}
+        </a>
       </span>
     </TableCell>
     <TableCell align="left">{author}</TableCell>

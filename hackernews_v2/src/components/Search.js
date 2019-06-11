@@ -1,18 +1,11 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import TextField from '@material-ui/core/TextField';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+
 import SearchIcon from '@material-ui/icons/Search';
-import DirectionsIcon from '@material-ui/icons/Directions';
 
 const useStyles = makeStyles({
   root: {
@@ -26,7 +19,8 @@ const useStyles = makeStyles({
     flex: 1
   },
   iconButton: {
-    padding: 10
+    padding: 10,
+    color: '#203b61'
   },
   divider: {
     width: 1,
@@ -35,7 +29,12 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Search({ onSearchChange, searchTerm }) {
+export default function Search({
+  onSearchChange,
+  searchString,
+  searchTerm,
+  searchAPI
+}) {
   const classes = useStyles();
 
   return (
@@ -43,32 +42,18 @@ export default function Search({ onSearchChange, searchTerm }) {
       <InputBase
         className={classes.input}
         placeholder="Search HackerNews API"
-        value={searchTerm}
+        value={searchString}
         onChange={e => onSearchChange(e.target.value)}
         inputProps={{ 'aria-label': 'Search Google Maps' }}
       />
-      <IconButton className={classes.iconButton} aria-label="Search">
+      <Divider className={classes.divider} />
+      <IconButton
+        onClick={() => searchAPI()}
+        className={classes.iconButton}
+        aria-label="Search"
+      >
         <SearchIcon />
       </IconButton>
-      <Divider className={classes.divider} />
     </Paper>
   );
 }
-/* 
-const Search = ({ onSearchChange, searchTerm }) => (
-  <FormControl fullWidth>
-    <TextField
-      id="outlined-name"
-      label="Search "
-      value={searchTerm}
-      onChange={e => onSearchChange(e.target.value)}
-      margin="normal"
-      variant="outlined"
-    />
-    <Grid xs={4}>
-      <button>Click</button>
-    </Grid>
-  </FormControl>
-);
-
-export default Search; */

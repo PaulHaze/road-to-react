@@ -8,9 +8,9 @@ import TableRow from '@material-ui/core/TableRow';
 
 import NewsDetail from './NewsDetail';
 
-const isSearched = searchTerm => item =>
-  item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  item.author.toLowerCase().includes(searchTerm.toLowerCase());
+// const isSearched = searchTerm => item =>
+//   item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//   item.author.toLowerCase().includes(searchTerm.toLowerCase());
 
 const NewsList = ({ result, removeStory, searchTerm }) => (
   <Table>
@@ -27,20 +27,18 @@ const NewsList = ({ result, removeStory, searchTerm }) => (
     </TableHead>
     <TableBody>
       {result &&
-        result
-          .filter(isSearched(searchTerm))
-          .map(story => (
-            <NewsDetail
-              key={story.objectID}
-              id={story.objectID}
-              url={story.url}
-              title={story.title}
-              author={story.author}
-              comments={story.num_comments}
-              removeStory={removeStory}
-              points={story.points}
-            />
-          ))}
+        result.map(story => (
+          <NewsDetail
+            key={story.objectID}
+            id={story.objectID}
+            url={story.url}
+            title={story.title}
+            author={story.author}
+            comments={story.num_comments}
+            removeStory={removeStory}
+            points={story.points}
+          />
+        ))}
     </TableBody>
   </Table>
 );

@@ -14,17 +14,18 @@ export default class HackerNews extends Component {
     super(props);
     this.state = {
       result: null,
+      searchString: '',
       searchTerm: DEFAULT_QUERY
     };
   }
 
   componentDidMount = () => {
-    this.searchApi();
+    this.requestApiSearch();
   };
 
-  searchApi = () => {
-    const { searchTerm } = this.state;
-    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+  requestApiSearch = () => {
+    const { searchString } = this.state;
+    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchString}`)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
       .catch(error => error);
@@ -36,10 +37,18 @@ export default class HackerNews extends Component {
     });
   };
 
-  onSearchChange = term => {
+  onSearchChange = string => {
     this.setState({
-      searchTerm: term
+      searchString: string
     });
+  };
+
+  searchAPI = () => {
+    console.log(this.state.searchString);
+    this.setState({
+      searchTerm: this.state.searchString
+    });
+    this.requestApiSearch();
   };
 
   removeStory = id => {
@@ -50,10 +59,15 @@ export default class HackerNews extends Component {
   };
 
   render() {
-    const { result, searchTerm } = this.state;
+    const { result, searchTerm, searchString } = this.state;
     return (
       <div>
-        <Search onSearchChange={this.onSearchChange} searchTerm={searchTerm} />
+        <Search
+          onSearchChange={this.onSearchChange}
+          searchTerm={searchTerm}
+          searchString={searchString}
+          searchAPI={this.searchAPI}
+        />
         <hr />
         <h1 className="text-center">Results:</h1>
         {result && (
