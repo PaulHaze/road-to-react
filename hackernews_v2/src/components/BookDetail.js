@@ -18,7 +18,7 @@ export default function BookDetail({
     <TableRow>
       <TableCell component="th" scope="row">
         <span>
-          <a href={url}> {title}</a>
+          <a href={url}>{title}</a>
         </span>
       </TableCell>
       <TableCell align="left">{author}</TableCell>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/paper';
-import BookTable from './components/BookTable';
+import HackerNews from './components/HackerNews';
 import './App.css';
 
 const useStyles = makeStyles(theme => ({
@@ -16,9 +16,8 @@ export default function App() {
 
   return (
     <Paper elevation={15} className={`App ${classes.root}`}>
-      <h1 className=" text-center">Book List</h1>
-      <hr />
-      <BookTable />
+      <h1 className=" text-center">HackerNews API</h1>
+      <HackerNews />
     </Paper>
   );
 }
