@@ -5,6 +5,7 @@ import { MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 import Search from './SearchTwo';
 
 // API constants
+const DEFAULT_QUERY = 'react';
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
@@ -14,7 +15,8 @@ export default class HackerNews extends Component {
     super(props);
     this.state = {
       result: null,
-      searchString: ''
+      searchString: '',
+      searchTerm: DEFAULT_QUERY
     };
   }
   componentDidMount = () => {
@@ -32,13 +34,13 @@ export default class HackerNews extends Component {
       result
     });
   };
-  onSearchChange = e => {
+  onSearchChange = string => {
     this.setState({
-      searchString: e.target.value
+      searchString: string
     });
   };
-  onSearchSubmit = e => {
-    e.preventDefault();
+  onSearchSubmit = () => {
+    console.log(this.state.searchString);
     this.requestApiSearch();
   };
   removeStory = id => {
@@ -56,9 +58,11 @@ export default class HackerNews extends Component {
         <MDBRow className="py-2">
           <MDBCol md="12">
             <Search
-              onChange={this.onSearchChange}
+              onSubmit={this.requestApiSearch}
+              onSearchChange={this.onSearchChange}
+              searchTerm={searchTerm}
               searchString={searchString}
-              onSubmit={this.onSearchSubmit}
+              searchAPI={this.searchAPI}
             />
             <hr />
           </MDBCol>
