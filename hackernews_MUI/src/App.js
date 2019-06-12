@@ -6,8 +6,8 @@ import './App.css';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(8),
-    backgroundColor: '#fafff9'
+    padding: theme.spacing(3),
+    backgroundColor: '#eef7f9'
   }
 }));
 

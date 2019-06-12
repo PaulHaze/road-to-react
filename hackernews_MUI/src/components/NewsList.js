@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 import Icon from '@material-ui/core/Icon';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,39 +11,65 @@ import TableRow from '@material-ui/core/TableRow';
 
 import NewsDetail from './NewsDetail';
 
+const styles = theme => ({
+  root: {
+    display: 'flex',
+    marginTop: theme.spacing.unit * 2,
+    overflowX: 'hide',
+    minWidth: 340
+  },
+  table: {
+    minWidth: 340
+  },
+  tableCell: {
+    paddingRight: 3,
+    paddingLeft: 8
+  }
+});
+
 // const isSearched = searchTerm => item =>
 //   item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
 //   item.author.toLowerCase().includes(searchTerm.toLowerCase());
 
-const NewsList = ({ result, removeStory, searchTerm }) => (
-  <Table>
-    <TableHead>
-      <TableRow>
-        <TableCell>TITLE</TableCell>
-        <TableCell align="left">AUTHOR</TableCell>
-        <TableCell align="center">RATING</TableCell>
-        <TableCell align="center">
-          <Icon>comment</Icon>
-        </TableCell>
-        <TableCell />
-      </TableRow>
-    </TableHead>
-    <TableBody>
-      {result &&
-        result.map(story => (
-          <NewsDetail
-            key={story.objectID}
-            id={story.objectID}
-            url={story.url}
-            title={story.title}
-            author={story.author}
-            comments={story.num_comments}
-            removeStory={removeStory}
-            points={story.points}
-          />
-        ))}
-    </TableBody>
-  </Table>
+const NewsList = ({ result, removeStory, searchTerm, classes }) => (
+  <Paper className={classes.root}>
+    <Table className={classes.table}>
+      <TableHead>
+        <TableRow>
+          <TableCell className={classes.tableCell}>TITLE</TableCell>
+          <TableCell className={classes.tableCell} align="left">
+            AUTHOR
+          </TableCell>
+          <TableCell className={classes.tableCell} align="center">
+            RATING
+          </TableCell>
+          <TableCell className={classes.tableCell} align="center">
+            <Icon>comment</Icon>
+          </TableCell>
+          <TableCell className={classes.tableCell} />
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {result &&
+          result.map(story => (
+            <NewsDetail
+              key={story.objectID}
+              id={story.objectID}
+              url={story.url}
+              title={story.title}
+              author={story.author}
+              comments={story.num_comments}
+              removeStory={removeStory}
+              points={story.points}
+            />
+          ))}
+      </TableBody>
+    </Table>
+  </Paper>
 );
 
-export default NewsList;
+NewsList.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(NewsList);

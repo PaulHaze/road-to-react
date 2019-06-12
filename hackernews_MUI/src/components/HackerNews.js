@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
 import NewsList from './NewsList';
 
 import Search from './Search';
@@ -71,11 +72,13 @@ export default class HackerNews extends Component {
         <hr />
         <h1 className="text-center">Results:</h1>
         {result && (
-          <NewsList
-            result={result.hits}
-            removeStory={this.removeStory}
-            searchTerm={searchTerm}
-          />
+          <Grid xs={12}>
+            <NewsList
+              result={result.hits}
+              removeStory={this.removeStory}
+              searchTerm={searchTerm}
+            />
+          </Grid>
         )}
       </div>
     );

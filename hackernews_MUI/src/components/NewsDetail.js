@@ -3,6 +3,15 @@ import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = theme => ({
+  tableCell: {
+    paddingRight: 4,
+    paddingLeft: 8
+  }
+});
 
 const NewsDetail = ({
   url,
@@ -11,20 +20,27 @@ const NewsDetail = ({
   author,
   points,
   comments,
-  removeStory
+  removeStory,
+  classes
 }) => (
   <TableRow>
-    <TableCell component="th" scope="row">
+    <TableCell className={classes.tableCell} component="th" scope="row">
       <span>
         <a href={url} target="blank">
           {title}
         </a>
       </span>
     </TableCell>
-    <TableCell align="left">{author}</TableCell>
-    <TableCell align="center">{points}/5</TableCell>
-    <TableCell align="center">{comments}</TableCell>
-    <TableCell>
+    <TableCell className={classes.tableCell} align="left">
+      {author}
+    </TableCell>
+    <TableCell className={classes.tableCell} align="center">
+      {points}/5
+    </TableCell>
+    <TableCell className={classes.tableCell} align="center">
+      {comments}
+    </TableCell>
+    <TableCell className={classes.tableCell}>
       <Button
         style={{
           maxWidth: '40px',
@@ -45,4 +61,8 @@ const NewsDetail = ({
   </TableRow>
 );
 
-export default NewsDetail;
+NewsDetail.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(NewsDetail);

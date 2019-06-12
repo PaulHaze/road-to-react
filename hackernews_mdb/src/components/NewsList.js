@@ -7,7 +7,7 @@ const isSearched = searchTerm => item =>
   item.author.toLowerCase().includes(searchTerm.toLowerCase());
 
 const NewsList = ({ result, removeStory, searchTerm }) => (
-  <MDBTable>
+  <MDBTable responsiveSm striped>
     <MDBTableHead style={{ justifyContent: 'space-between' }}>
       <tr className="grey-text">
         <th scope="col">TITLE</th>
@@ -22,21 +22,19 @@ const NewsList = ({ result, removeStory, searchTerm }) => (
       </tr>
     </MDBTableHead>
     <MDBTableBody>
-      {(result !== null || result !== undefined) &&
-        result
-          .filter(isSearched(searchTerm))
-          .map(story => (
-            <NewsDetail
-              key={story.objectID}
-              id={story.objectID}
-              url={story.url}
-              title={story.title}
-              author={story.author}
-              comments={story.num_comments}
-              removeStory={removeStory}
-              points={story.points}
-            />
-          ))}
+      {result &&
+        result.map(story => (
+          <NewsDetail
+            key={story.objectID}
+            id={story.objectID}
+            url={story.url}
+            title={story.title}
+            author={story.author}
+            comments={story.num_comments}
+            removeStory={removeStory}
+            points={story.points}
+          />
+        ))}
     </MDBTableBody>
   </MDBTable>
 );
