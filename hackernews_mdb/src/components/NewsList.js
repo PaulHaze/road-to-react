@@ -2,11 +2,11 @@ import React from 'react';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import NewsDetail from './NewsDetail';
 
-const isSearched = searchTerm => item =>
-  item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  item.author.toLowerCase().includes(searchTerm.toLowerCase());
+// const isSearched = searchTerm => item =>
+//   item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//   item.author.toLowerCase().includes(searchTerm.toLowerCase());
 
-const NewsList = ({ result, removeStory, searchTerm }) => (
+const NewsList = ({ result, removeStory }) => (
   <MDBTable responsiveSm striped>
     <MDBTableHead style={{ justifyContent: 'space-between' }}>
       <tr className="grey-text">

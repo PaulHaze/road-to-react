@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NewsList from './NewsList';
 import { MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 
-import Search from './SearchTwo';
+import Search from './Search';
 
 // API constants
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
@@ -22,7 +22,10 @@ export default class HackerNews extends Component {
   };
   requestApiSearch = () => {
     const { searchString } = this.state;
-    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchString}`)
+    const searchUrl = searchString
+      ? `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchString}`
+      : `${PATH_BASE}${PATH_SEARCH}?tags=front_page`;
+    fetch(`${searchUrl}`)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
       .catch(error => error);
@@ -43,8 +46,6 @@ export default class HackerNews extends Component {
   };
   removeStory = id => {
     const newHits = this.state.result.hits.filter(x => x.objectID !== id);
-    // use spread operator to pass just the updated part
-    // of the object
     this.setState({
       result: { ...this.state.result, hits: newHits }
     });
