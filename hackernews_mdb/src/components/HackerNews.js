@@ -3,28 +3,32 @@ import NewsList from './NewsList';
 import { MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 
 import Search from './Search';
+import Pagination from './Pagination';
 
 // API constants
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
+const PARAM_PAGE = 'page=';
 
 export default class HackerNews extends Component {
   constructor(props) {
     super(props);
     this.state = {
       result: null,
+      pageNumber: 0,
       searchString: ''
     };
   }
   componentDidMount = () => {
     this.requestApiSearch();
   };
-  requestApiSearch = () => {
+  requestApiSearch = (page = 2) => {
     const { searchString } = this.state;
     const searchUrl = searchString
-      ? `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchString}`
+      ? `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchString}&${PARAM_PAGE}${page}`
       : `${PATH_BASE}${PATH_SEARCH}?tags=front_page`;
+    console.log(searchUrl);
     fetch(`${searchUrl}`)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
@@ -51,9 +55,11 @@ export default class HackerNews extends Component {
     });
   };
   render() {
-    const { result, searchTerm, searchString } = this.state;
+    const { result, searchTerm, searchString, pageNumber } = this.state;
+    const page = (result && result.page) || 0;
     return (
       <MDBContainer>
+        {/* SEARCH */}
         <MDBRow className="py-2">
           <MDBCol md="12">
             <Search
@@ -61,9 +67,10 @@ export default class HackerNews extends Component {
               searchString={searchString}
               onSubmit={this.onSearchSubmit}
             />
-            <hr />
           </MDBCol>
         </MDBRow>
+
+        {/* RESULTS */}
         <MDBRow>
           <MDBCol md="12">
             <h1 className="text-center">Results:</h1>
@@ -76,6 +83,9 @@ export default class HackerNews extends Component {
             )}
           </MDBCol>
         </MDBRow>
+
+        {/* PAGINATION */}
+        <Pagination pageNumber={pageNumber} />
       </MDBContainer>
     );
   }
