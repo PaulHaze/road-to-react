@@ -7,6 +7,7 @@ import './App.css';
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3),
+    paddingBottom: '50px',
     backgroundColor: '#eef7f9'
   }
 }));

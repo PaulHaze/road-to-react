@@ -29,26 +29,22 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Search({
-  onSearchChange,
-  searchString,
-  searchTerm,
-  searchAPI
-}) {
+export default function Search({ onChange, onSubmit, searchString }) {
   const classes = useStyles();
 
   return (
     <Paper className={classes.root}>
       <InputBase
+        type="text"
         className={classes.input}
         placeholder="Search HackerNews API"
         value={searchString}
-        onChange={e => onSearchChange(e.target.value)}
+        onChange={onChange}
         inputProps={{ 'aria-label': 'Search Google Maps' }}
       />
       <Divider className={classes.divider} />
       <IconButton
-        onClick={() => searchAPI()}
+        onClick={onSubmit}
         className={classes.iconButton}
         aria-label="Search"
       >

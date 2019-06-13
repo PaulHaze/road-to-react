@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import NewsList from './NewsList';
 
 import Search from './Search';
 
 // API constants
-const DEFAULT_QUERY = 'react';
+const DEFAULT_HPP = '100';
+
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
+const PARAM_PAGE = 'page=';
+const PARAM_HPP = 'hitsPerPage=';
 
 export default class HackerNews extends Component {
   constructor(props) {
@@ -16,7 +20,7 @@ export default class HackerNews extends Component {
     this.state = {
       result: null,
       searchString: '',
-      searchTerm: DEFAULT_QUERY
+      pageNumber: 0
     };
   }
 
@@ -24,31 +28,33 @@ export default class HackerNews extends Component {
     this.requestApiSearch();
   };
 
-  requestApiSearch = () => {
+  requestApiSearch = (page = 0) => {
     const { searchString } = this.state;
-    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchString}`)
+    const searchUrl = searchString
+      ? `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchString}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
+      : `${PATH_BASE}${PATH_SEARCH}?tags=front_page`;
+    fetch(searchUrl)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
       .catch(error => error);
   };
 
   setSearchTopStories = result => {
+    const { hits, page } = result;
+    const oldHits = page ? this.state.result.hits : [];
+    const updatedHits = [...oldHits, ...hits];
     this.setState({
-      result
+      result: { hits: updatedHits, page }
     });
   };
 
-  onSearchChange = string => {
+  onSearchChange = e => {
     this.setState({
-      searchString: string
+      searchString: e.target.value
     });
   };
-
-  searchAPI = () => {
-    console.log(this.state.searchString);
-    this.setState({
-      searchTerm: this.state.searchString
-    });
+  onSearchSubmit = e => {
+    e.preventDefault();
     this.requestApiSearch();
   };
 
@@ -60,26 +66,42 @@ export default class HackerNews extends Component {
   };
 
   render() {
-    const { result, searchTerm, searchString } = this.state;
+    const { result, searchTerm, searchString, pageNumber } = this.state;
+    const page = (result && result.page) || 0;
     return (
-      <div>
-        <Search
-          onSearchChange={this.onSearchChange}
-          searchTerm={searchTerm}
-          searchString={searchString}
-          searchAPI={this.searchAPI}
-        />
-        <hr />
-        <h1 className="text-center">Results:</h1>
-        {result && (
-          <Grid xs={12}>
-            <NewsList
-              result={result.hits}
-              removeStory={this.removeStory}
-              searchTerm={searchTerm}
-            />
-          </Grid>
-        )}
+      <div className="page">
+        <div className="interactions">
+          <Search
+            onChange={this.onSearchChange}
+            searchString={searchString}
+            onSubmit={this.onSearchSubmit}
+          />
+          <hr />
+          <h1 className="text-center">Results:</h1>
+          {result && (
+            <Grid xs={12}>
+              <NewsList
+                result={result.hits}
+                removeStory={this.removeStory}
+                searchTerm={searchTerm}
+              />
+            </Grid>
+          )}
+        </div>
+        <div className="interactions">
+          <Button
+            className="float-right"
+            onClick={() => this.requestApiSearch(page + 1)}
+          >
+            MORE
+          </Button>
+          {/* <Button
+            className="float-right"
+            onClick={() => this.requestApiSearch(page - 1)}
+          >
+             ←
+          </Button> */}
+        </div>
       </div>
     );
   }

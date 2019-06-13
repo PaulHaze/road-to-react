@@ -4,6 +4,7 @@ import { MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 
 import Search from './Search';
 import Pagination from './Pagination';
+import PaginationMdb from './Pagination_Mdb';
 
 // API constants
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
@@ -85,7 +86,7 @@ export default class HackerNews extends Component {
         </MDBRow>
 
         {/* PAGINATION */}
-        <Pagination pageNumber={pageNumber} />
+        <PaginationMdb pageNumber={pageNumber} />
       </MDBContainer>
     );
   }
