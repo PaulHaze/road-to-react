@@ -4,9 +4,10 @@ import Button from '@material-ui/core/Button';
 import NewsList from './NewsList';
 
 import Search from './Search';
+import Pagination from './Pagination';
 
 // API constants
-const DEFAULT_HPP = '100';
+const DEFAULT_HPP = '20';
 
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
@@ -39,12 +40,17 @@ export default class HackerNews extends Component {
       .catch(error => error);
   };
 
+  // setSearchTopStories = result => {
+  //   const { hits, page } = result;
+  //   const oldHits = page ? this.state.result.hits : [];
+  //   const updatedHits = [...oldHits, ...hits];
+  //   this.setState({
+  //     result: { hits: updatedHits, page }
+  //   });
+  // };
   setSearchTopStories = result => {
-    const { hits, page } = result;
-    const oldHits = page ? this.state.result.hits : [];
-    const updatedHits = [...oldHits, ...hits];
     this.setState({
-      result: { hits: updatedHits, page }
+      result
     });
   };
 
@@ -93,15 +99,18 @@ export default class HackerNews extends Component {
             className="float-right"
             onClick={() => this.requestApiSearch(page + 1)}
           >
-            MORE
+            →
           </Button>
-          {/* <Button
+          <Button
             className="float-right"
             onClick={() => this.requestApiSearch(page - 1)}
           >
              ←
-          </Button> */}
+          </Button>
         </div>
+        <hr />
+        <h3>Material-ui Table Pagination</h3>
+        <Pagination />
       </div>
     );
   }
