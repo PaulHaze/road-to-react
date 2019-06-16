@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3),
     paddingBottom: '50px',
-    backgroundColor: '#eef7f9'
+    backgroundColor: '#EDEEF0'
   }
 }));
 
@@ -16,7 +16,7 @@ export default function App() {
   const classes = useStyles();
 
   return (
-    <Paper elevation={15} className={`App ${classes.root}`}>
+    <Paper elevation={15} className={`${classes.root} App `}>
       <h1 className=" text-center">HackerNews API</h1>
       <HackerNews />
     </Paper>

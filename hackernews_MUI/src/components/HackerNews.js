@@ -85,12 +85,14 @@ export default class HackerNews extends Component {
           <hr />
           <h1 className="text-center">Results:</h1>
           {result && (
-            <Grid xs={12}>
-              <NewsList
-                result={result.hits}
-                removeStory={this.removeStory}
-                searchTerm={searchTerm}
-              />
+            <Grid container>
+              <Grid item xs={12}>
+                <NewsList
+                  result={result.hits}
+                  removeStory={this.removeStory}
+                  searchTerm={searchTerm}
+                />
+              </Grid>
             </Grid>
           )}
         </div>
