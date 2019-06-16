@@ -19,13 +19,15 @@ export default class HackerNews extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: null,
+      results: null,
       searchString: '',
       pageNumber: 0
     };
   }
 
   componentDidMount = () => {
+    const { searchString } = this.state;
+    this.setState({ searchKey: searchString });
     this.requestApiSearch();
   };
 
@@ -49,8 +51,14 @@ export default class HackerNews extends Component {
   //   });
   // };
   setSearchTopStories = result => {
+    const { hits, page } = result;
+    const { searchKey, results } = this.state;
+    const oldHits =
+      results && results[searchKey] ? results[searchKey].hits : [];
+
+    const updatedhits = [...oldHits, ...hits];
     this.setState({
-      result
+      results: { ...results, [searchKey]: { hits: updatedhits, page } }
     });
   };
 
@@ -61,6 +69,8 @@ export default class HackerNews extends Component {
   };
   onSearchSubmit = e => {
     e.preventDefault();
+    const { searchString } = this.state;
+    this.setState({ searchKey: searchString });
     this.requestApiSearch();
   };
 
@@ -110,9 +120,9 @@ export default class HackerNews extends Component {
              ←
           </Button>
         </div>
-        <hr />
+        {/* <hr />
         <h3>Material-ui Table Pagination</h3>
-        <Pagination />
+        <Pagination /> */}
       </div>
     );
   }
