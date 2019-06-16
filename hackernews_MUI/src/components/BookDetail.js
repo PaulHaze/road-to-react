@@ -38,7 +38,7 @@ export default function BookDetail({
           variant="contained"
           color="secondary"
           size="small"
-        >
+                  >
           <Icon>cancel</Icon>
         </Button>
       </TableCell>

@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import NewsList from './NewsList';
 
 import Search from './Search';
-import Pagination from './Pagination';
 
 // API constants
 const DEFAULT_HPP = '20';
@@ -82,48 +81,46 @@ export default class HackerNews extends Component {
   };
 
   render() {
-    const { result, searchTerm, searchString, pageNumber } = this.state;
+    const { result, searchTerm, searchString } = this.state;
     const page = (result && result.page) || 0;
-    return (
-      <div className="page">
+    return <div className="page">
         <div className="interactions">
-          <Search
-            onChange={this.onSearchChange}
-            searchString={searchString}
-            onSubmit={this.onSearchSubmit}
-          />
-          <hr />
-          <h1 className="text-center">Results:</h1>
-          {result && (
-            <Grid container>
-              <Grid item xs={12}>
-                <NewsList
-                  result={result.hits}
-                  removeStory={this.removeStory}
-                  searchTerm={searchTerm}
-                />
-              </Grid>
-            </Grid>
-          )}
+            <Search
+                onChange={this.onSearchChange}
+                searchString={searchString}
+                onSubmit={this.onSearchSubmit}
+            />
+            <hr/>
+            <h1 className="text-center">Results:</h1>
+            {result && (
+                <Grid container>
+                    <Grid item xs={12}>
+                        <NewsList
+                            result={result.hits}
+                            removeStory={this.removeStory}
+                            searchTerm={searchTerm}
+                        />
+                    </Grid>
+                </Grid>
+            )}
         </div>
         <div className="interactions">
-          <Button
-            className="float-right"
-            onClick={() => this.requestApiSearch(page + 1)}
-          >
-            →
-          </Button>
-          <Button
-            className="float-right"
-            onClick={() => this.requestApiSearch(page - 1)}
-          >
-             ←
-          </Button>
+            <Button
+                className="float-right"
+                onClick={() => this.requestApiSearch(page + 1)}
+            >
+                →
+            </Button>
+            <Button
+                className="float-right"
+                onClick={() => this.requestApiSearch(page - 1)}
+            >
+                ←
+            </Button>
         </div>
         {/* <hr />
         <h3>Material-ui Table Pagination</h3>
         <Pagination /> */}
-      </div>
-    );
+    </div>;
   }
 }
