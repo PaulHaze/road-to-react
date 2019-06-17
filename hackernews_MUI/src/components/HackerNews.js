@@ -19,6 +19,7 @@ export default class HackerNews extends Component {
     super(props);
     this.state = {
       results: null,
+      searchKey: '',
       searchString: '',
       pageNumber: 0
     };
@@ -27,11 +28,10 @@ export default class HackerNews extends Component {
   componentDidMount = () => {
     const { searchString } = this.state;
     this.setState({ searchKey: searchString });
-    this.requestApiSearch();
+    this.requestApiSearch(searchString);
   };
 
-  requestApiSearch = (page = 0) => {
-    const { searchString } = this.state;
+  requestApiSearch = (searchString, page = 0) => {
     const searchUrl = searchString
       ? `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchString}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
       : `${PATH_BASE}${PATH_SEARCH}?tags=front_page`;
@@ -41,23 +41,20 @@ export default class HackerNews extends Component {
       .catch(error => error);
   };
 
-  // setSearchTopStories = result => {
-  //   const { hits, page } = result;
-  //   const oldHits = page ? this.state.result.hits : [];
-  //   const updatedHits = [...oldHits, ...hits];
-  //   this.setState({
-  //     result: { hits: updatedHits, page }
-  //   });
-  // };
   setSearchTopStories = result => {
     const { hits, page } = result;
     const { searchKey, results } = this.state;
     const oldHits =
-      results && results[searchKey] ? results[searchKey].hits : [];
+      results && results[searchKey]
+        ? results[searchKey].hits
+        : [];
 
     const updatedhits = [...oldHits, ...hits];
     this.setState({
-      results: { ...results, [searchKey]: { hits: updatedhits, page } }
+      results: {
+        ...results,
+        [searchKey]: { hits: updatedhits, page }
+      }
     });
   };
 
@@ -70,7 +67,7 @@ export default class HackerNews extends Component {
     e.preventDefault();
     const { searchString } = this.state;
     this.setState({ searchKey: searchString });
-    this.requestApiSearch();
+    this.requestApiSearch(searchString);
   };
 
   removeStory = id => {
@@ -81,44 +78,46 @@ export default class HackerNews extends Component {
   };
 
   render() {
-    const { result, searchTerm, searchString } = this.state;
-    const page = (result && result.page) || 0;
+    const { results, searchKey, searchString } = this.state;
+    const page = (results && results[searchKey] && results[searchKey].page) || 0;
     return <div className="page">
-        <div className="interactions">
-            <Search
-                onChange={this.onSearchChange}
-                searchString={searchString}
-                onSubmit={this.onSearchSubmit}
-            />
-            <hr/>
-            <h1 className="text-center">Results:</h1>
-            {result && (
-                <Grid container>
-                    <Grid item xs={12}>
-                        <NewsList
-                            result={result.hits}
-                            removeStory={this.removeStory}
-                            searchTerm={searchTerm}
-                        />
-                    </Grid>
-                </Grid>
-            )}
-        </div>
-        <div className="interactions">
-            <Button
-                className="float-right"
-                onClick={() => this.requestApiSearch(page + 1)}
-            >
-                →
-            </Button>
-            <Button
-                className="float-right"
-                onClick={() => this.requestApiSearch(page - 1)}
-            >
-                ←
-            </Button>
-        </div>
-        {/* <hr />
+      <div className="interactions">
+        <Search
+          onChange={this.onSearchChange}
+          searchString={searchString}
+          onSubmit={this.onSearchSubmit}
+        />
+        <hr/>
+        <h1 className="text-center">Results:</h1>
+        {results && (
+          <Grid container>
+            <Grid item xs={12}>
+              <NewsList
+                result={results.hits}
+                removeStory={this.removeStory}
+                searchTerm={searchString}
+              />
+            </Grid>
+          </Grid>
+        )}
+      </div>
+      <div className="interactions">
+        <Button
+          className="float-right"
+          onClick={() => this.requestApiSearch(page + 1)}
+          href='#'
+        >
+          →
+        </Button>
+        <Button
+          className="float-right"
+          onClick={() => this.requestApiSearch(page - 1)}
+          href='#'
+        >
+          ←
+        </Button>
+      </div>
+      {/* <hr />
         <h3>Material-ui Table Pagination</h3>
         <Pagination /> */}
     </div>;
