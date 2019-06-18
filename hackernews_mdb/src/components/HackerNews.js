@@ -21,6 +21,7 @@ export default class HackerNews extends Component {
       searchString: ''
     };
   }
+
   componentDidMount = () => {
     this.requestApiSearch();
   };
@@ -29,8 +30,8 @@ export default class HackerNews extends Component {
     const searchUrl = searchString
       ? `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchString}&${PARAM_PAGE}${page}`
       : `${PATH_BASE}${PATH_SEARCH}?tags=front_page`;
-    console.log(searchUrl);
-    fetch(`${searchUrl}`)
+
+    fetch(searchUrl)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
       .catch(error => error);
@@ -55,6 +56,7 @@ export default class HackerNews extends Component {
       result: { ...this.state.result, hits: newHits }
     });
   };
+
   render() {
     const { result, searchTerm, searchString, pageNumber } = this.state;
     const page = (result && result.page) || 0;
@@ -86,7 +88,7 @@ export default class HackerNews extends Component {
         </MDBRow>
 
         {/* PAGINATION */}
-        <PaginationMdb pageNumber={pageNumber} />
+        <PaginationMdb pageNumber={pageNumber}/>
       </MDBContainer>
     );
   }

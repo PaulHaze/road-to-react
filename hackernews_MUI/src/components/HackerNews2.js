@@ -15,11 +15,10 @@ const PARAM_SEARCH = 'query=';
 const PARAM_PAGE = 'page=';
 const PARAM_HPP = 'hitsPerPage=';
 
-export default class HackerNews extends Component {
+export default class HackerNews2 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      result: null,
       results: null,
       searchKey: '',
       searchString: '',
@@ -28,23 +27,9 @@ export default class HackerNews extends Component {
   }
 
   componentDidMount = () => {
-    this.requestApiSearch(this.state.searchString);
-  };
-
-  requestApiSearch = (searchTerm = '', page = 0) => {
-    const searchUrl = searchTerm
-      ? `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
-      : `${PATH_BASE}${PATH_SEARCH}?tags=front_page`;
-    fetch(searchUrl)
-      .then(response => response.json())
-      .then(result => this.setSearchTopStories(result))
-      .catch(error => error);
-  };
-
-  setSearchTopStories = result => {
-    this.setState({
-      result
-    });
+    const { searchString } = this.state;
+    this.setState({ searchString: DEFAULT_SEARCH, searchKey: this.state.searchString });
+    this.requestApiSearch(DEFAULT_SEARCH);
   };
 
   onSearchChange = e => {
@@ -59,23 +44,33 @@ export default class HackerNews extends Component {
     e.preventDefault();
   };
 
+  requestApiSearch = (searchString, page = 0) => {
+    console.log(searchString);
+    const searchUrl = searchString
+      ? `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchString}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
+      : `${PATH_BASE}${PATH_SEARCH}?tags=front_page`;
+    fetch(searchUrl)
+      .then(response => response.json())
+      .then(result => this.setSearchTopStories(result))
+      .catch(error => error);
+  };
 
-  // setSearchTopStories = result => {
-  //   const { hits, page } = result;
-  //   const { searchKey, results } = this.state;
-  //   const oldHits =
-  //     results && results[searchKey]
-  //       ? results[searchKey].hits
-  //       : [];
-  //
-  //   const updatedhits = [...oldHits, ...hits];
-  //   this.setState({
-  //     results: {
-  //       ...results,
-  //       [searchKey]: { hits: updatedhits, page }
-  //     }
-  //   });
-  // };
+  setSearchTopStories = result => {
+    const { hits, page } = result;
+    const { searchKey, results } = this.state;
+    const oldHits =
+      results && results[searchKey]
+        ? results[searchKey].hits
+        : [];
+
+    const updatedhits = [...oldHits, ...hits];
+    this.setState({
+      results: {
+        ...results,
+        [searchKey]: { hits: updatedhits, page }
+      }
+    });
+  };
 
 
   removeStory = id => {
@@ -86,10 +81,9 @@ export default class HackerNews extends Component {
   };
 
   render() {
-    const { result, results, searchKey, searchString } = this.state;
-    const page = this.state.pageNumber;
-    // const page = (results && results[searchKey] && results[searchKey].page) || 0;
-    // const list = (results && results[searchKey] && results[searchKey].hits) || [];
+    const { results, searchKey, searchString } = this.state;
+    const page = (results && results[searchKey] && results[searchKey].page) || 0;
+    const list = (results && results[searchKey] && results[searchKey].hits) || []
     return <div className="page">
       <div className="interactions">
         <Search
@@ -99,11 +93,11 @@ export default class HackerNews extends Component {
         />
         <hr/>
         <h1 className="text-center">Results:</h1>
-        {result && (
+        {results && (
           <Grid container>
             <Grid item xs={12}>
               <NewsList
-                result={result.hits}
+                result={results[searchKey].hits}
                 removeStory={this.removeStory}
                 searchTerm={searchString}
               />
