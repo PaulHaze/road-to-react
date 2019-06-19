@@ -12,26 +12,26 @@ const useStyles = makeStyles({
     padding: '2px 4px',
     display: 'flex',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
   },
   input: {
     marginLeft: 8,
-    flex: 1
+    flex: 1,
   },
   iconButton: {
     padding: 10,
-    color: '#203b61'
+    color: '#203b61',
   },
   divider: {
     width: 1,
     height: 28,
-    margin: 4
-  }
+    margin: 4,
+  },
 });
 
 export default function Search({ onChange, onSubmit, value }) {
   const classes = useStyles();
-
+  
   return (
     <Paper className={classes.root}>
       <InputBase
@@ -42,7 +42,7 @@ export default function Search({ onChange, onSubmit, value }) {
         onChange={onChange}
         inputProps={{ 'aria-label': 'Search Google Maps' }}
       />
-      <Divider className={classes.divider} component={'hr'} />
+      <Divider className={classes.divider} component="hr" />
       <IconButton
         onClick={onSubmit}
         className={classes.iconButton}

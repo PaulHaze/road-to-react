@@ -16,15 +16,15 @@ const styles = theme => ({
     display: 'flex',
     marginTop: theme.spacing.unit * 2,
     overflowX: 'hide',
-    minWidth: 340
+    minWidth: 340,
   },
   table: {
-    minWidth: 340
+    minWidth: 340,
   },
   tableCell: {
     paddingRight: 3,
-    paddingLeft: 8
-  }
+    paddingLeft: 8,
+  },
 });
 
 // const isSearched = searchTerm => item =>
@@ -50,26 +50,26 @@ const NewsList = ({ result, removeStory, searchTerm, classes }) => (
         </TableRow>
       </TableHead>
       <TableBody>
-        {result &&
-          result.map(story => (
-            <NewsDetail
-              key={story.objectID}
-              id={story.objectID}
-              url={story.url}
-              title={story.title}
-              author={story.author}
-              comments={story.num_comments}
-              removeStory={removeStory}
-              points={story.points}
-            />
-          ))}
+        {result
+        && result.map(story => (
+          <NewsDetail
+            key={story.objectID}
+            id={story.objectID}
+            url={story.url}
+            title={story.title}
+            author={story.author}
+            comments={story.num_comments}
+            removeStory={removeStory}
+            points={story.points}
+          />
+        ))}
       </TableBody>
     </Table>
   </Paper>
 );
 
 NewsList.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(NewsList);

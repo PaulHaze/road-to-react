@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/paper';
+import Paper from '@material-ui/core/Paper';
 import HackerNews from './components/HackerNews';
 import './App.css';
 
@@ -8,8 +8,8 @@ const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(3),
     paddingBottom: '50px',
-    backgroundColor: '#EDEEF0'
-  }
+    backgroundColor: '#f1f1f6',
+  },
 }));
 
 export default function App() {
