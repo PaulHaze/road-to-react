@@ -7,7 +7,7 @@ import Search from './Search';
 
 // API constants
 const DEFAULT_HPP = '5';
-const DEFAULT_SEARCH = 'react';
+const DEFAULT_SEARCH = 'gatsby';
 
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
@@ -22,9 +22,8 @@ export default class HackerNews extends Component {
       results: null,
       searchKey: '',
       searchString: DEFAULT_SEARCH,
-      pageNumber: 0,
+      error: null,
     };
-    this.requestApiSearch = this.requestApiSearch.bind(this);
   }
 
   componentDidMount() {
@@ -56,15 +55,19 @@ export default class HackerNews extends Component {
   onSearchSubmit = (e) => {
     const { searchString } = this.state;
     this.setState({ searchKey: searchString });
-    this.requestApiSearch(searchString);
+    if (this.needsToSearchApi(searchString)) {
+      this.requestApiSearch(searchString);
+    }
     e.preventDefault();
   };
+
+  needsToSearchApi = searchTerm => !this.state.results[searchTerm];
 
   setSearchTopStories = (result) => {
     const { hits, page } = result;
     const { searchKey, results } = this.state;
     const oldHits = results && results[searchKey]
-      ? result[searchKey].hits
+      ? results[searchKey].hits
       : [];
 
     const updatedHits = [
@@ -79,17 +82,17 @@ export default class HackerNews extends Component {
     });
   };
 
-  requestApiSearch(searchTerm, page = 0) {
+  requestApiSearch = (searchTerm, page = 0) => {
     const searchUrl = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}
                        &${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`;
     fetch(searchUrl)
       .then(response => response.json())
       .then(result => this.setSearchTopStories(result))
-      .catch(error => error);
+      .catch(error => this.setState({ error }));
   }
 
   render() {
-    const { results, searchKey, searchString } = this.state;
+    const { results, searchKey, searchString, error } = this.state;
     const page = (results && results[searchKey] && results[searchKey].page) || 0;
     const list = (results && results[searchKey] && results[searchKey].hits) || [];
     return (
@@ -105,14 +108,25 @@ export default class HackerNews extends Component {
           <hr />
 
           <div className="Table-one">
-            <h1 className="text-center">Results: Table One</h1>
-            {results && (
-              <NewsList
-                result={list}
-                removeStory={this.removeStory}
-                searchTerm={searchString}
-              />
-            )}
+
+            {error
+              ? (
+                <h3 className="text-center">
+                  Something went wrong:
+                  <span>
+                    <br />
+                    <h5>{error.message}</h5>
+                  </span>
+                </h3>
+              )
+              : (
+                <NewsList
+                  result={list}
+                  removeStory={this.removeStory}
+                  searchTerm={searchString}
+                />
+              )
+            }
 
             {/* BUTTONS */}
             <div className="interactions">
@@ -127,7 +141,7 @@ export default class HackerNews extends Component {
               && (
                 <Button
                   className="float-right"
-                  onClick={() => this.requestApiSearch(searchString, page - 1)}
+                  onClick={() => this.requestApiSearch(searchKey, page - 1)}
                   href="#"
                 >
                   ←
