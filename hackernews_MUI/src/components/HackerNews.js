@@ -36,11 +36,15 @@ export default class HackerNews extends Component {
   }
 
   removeStory = (id) => {
-    const { result } = this.state;
-    const newHits = result.hits.filter(x => x.objectID !== id);
-    this.setState(prevState => ({
-      result: { ...prevState.result, hits: newHits },
-    }));
+    const { results, searchKey } = this.state;
+    const { hits, page } = results[searchKey];
+    const updatedHits = hits.filter(x => x.objectID !== id);
+    this.setState({
+      results: {
+        ...results,
+        [searchKey]: { hits: updatedHits, page },
+      },
+    });
   };
 
   onSearchChange = (e) => {
@@ -86,8 +90,7 @@ export default class HackerNews extends Component {
 
   render() {
     const { results, searchKey, searchString } = this.state;
-    const page = 0;
-    // const page = (results && results[searchKey] && results[searchKey].page) || 0;
+    const page = (results && results[searchKey] && results[searchKey].page) || 0;
     const list = (results && results[searchKey] && results[searchKey].hits) || [];
     return (
       <div className="page">

@@ -14,7 +14,7 @@ import NewsDetail from './NewsDetail';
 const styles = theme => ({
   root: {
     display: 'flex',
-    marginTop: theme.spacing.unit * 2,
+    marginTop: theme.spacing(2),
     overflowX: 'hide',
     minWidth: 340,
   },

@@ -3,14 +3,14 @@ import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-const styles = theme => ({
+const styles = () => ({
   tableCell: {
     paddingRight: 4,
-    paddingLeft: 8
-  }
+    paddingLeft: 8,
+  },
 });
 
 const NewsDetail = ({
@@ -21,7 +21,7 @@ const NewsDetail = ({
   points,
   comments,
   removeStory,
-  classes
+  classes,
 }) => (
   <TableRow>
     <TableCell className={classes.tableCell} component="th" scope="row">
@@ -35,7 +35,7 @@ const NewsDetail = ({
       {author}
     </TableCell>
     <TableCell className={classes.tableCell} align="center">
-      {points}/5
+      {points}
     </TableCell>
     <TableCell className={classes.tableCell} align="center">
       {comments}
@@ -45,10 +45,10 @@ const NewsDetail = ({
         style={{
           maxWidth: '40px',
           maxHeight: '40px',
-          minWidth: '30px',
-          minHeight: '30px',
+          minWidth: '20px',
+          minHeight: '20px',
           padding: '5px',
-          backgroundColor: '#93252d'
+          backgroundColor: '#93252d',
         }}
         onClick={() => removeStory(id)}
         variant="contained"
@@ -61,8 +61,8 @@ const NewsDetail = ({
   </TableRow>
 );
 
-NewsDetail.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+// NewsDetail.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
 export default withStyles(styles)(NewsDetail);

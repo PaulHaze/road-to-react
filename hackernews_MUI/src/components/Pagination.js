@@ -18,7 +18,7 @@ const useStyles1 = makeStyles(theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing(2.5)
+    marginLeft: theme.spacing(2.5),
   }
 }));
 
@@ -147,16 +147,16 @@ export default function CustomPaginationActionsTable() {
         <Table className={classes.table}>
           <TableBody>
             {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map(row => (
-                <TableRow key={row.name}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                </TableRow>
-              ))}
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map(row => (
+              <TableRow key={row.name}>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+              </TableRow>
+            ))}
 
             {emptyRows > 0 && (
               <TableRow style={{ height: 48 * emptyRows }}>
