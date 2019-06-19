@@ -1,18 +1,10 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button/index';
+import Icon from '@material-ui/core/Icon/index';
+import TableCell from '@material-ui/core/TableCell/index';
+import TableRow from '@material-ui/core/TableRow/index';
 
-export default function BookDetail({
-  url,
-  id,
-  title,
-  author,
-  points,
-  comments,
-  removeBook
-}) {
+export default function BookDetail({ url, id, title, author, points, comments, removeBook }) {
   const handleClick = () => removeBook(id);
   return (
     <TableRow>
@@ -22,7 +14,10 @@ export default function BookDetail({
         </span>
       </TableCell>
       <TableCell align="left">{author}</TableCell>
-      <TableCell align="center">{points}/5</TableCell>
+      <TableCell align="center">
+        {points}
+        /5
+      </TableCell>
       <TableCell align="center">{comments}</TableCell>
       <TableCell>
         <Button
@@ -32,13 +27,13 @@ export default function BookDetail({
             minWidth: '30px',
             minHeight: '30px',
             padding: '5px',
-            backgroundColor: '#93252d'
+            backgroundColor: '#93252d',
           }}
           onClick={handleClick}
           variant="contained"
           color="secondary"
           size="small"
-                  >
+        >
           <Icon>cancel</Icon>
         </Button>
       </TableCell>

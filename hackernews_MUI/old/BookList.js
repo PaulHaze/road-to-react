@@ -1,10 +1,10 @@
 import React from 'react';
-import Icon from '@material-ui/core/Icon';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import Icon from '@material-ui/core/Icon/index';
+import Table from '@material-ui/core/Table/index';
+import TableBody from '@material-ui/core/TableBody/index';
+import TableCell from '@material-ui/core/TableCell/index';
+import TableHead from '@material-ui/core/TableHead/index';
+import TableRow from '@material-ui/core/TableRow/index';
 
 import BookDetail from './BookDetail';
 

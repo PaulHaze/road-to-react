@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import BookList from './BookList';
 
-import { list } from '../data/list';
+import { list } from '../src/data/list';
 
 export default class BookTable extends Component {
   constructor(props) {
@@ -10,12 +10,14 @@ export default class BookTable extends Component {
       list
     };
   }
+  
   removeBook = id => {
     const newList = this.state.list.filter(x => x.objectID !== id);
     this.setState({
       list: newList
     });
   };
+  
   render() {
     const { list } = this.state;
     return (
