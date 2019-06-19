@@ -27,11 +27,8 @@ const styles = theme => ({
   },
 });
 
-// const isSearched = searchTerm => item =>
-//   item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//   item.author.toLowerCase().includes(searchTerm.toLowerCase());
 
-const NewsList = ({ result, removeStory, searchTerm, classes }) => (
+const NewsList = ({ result, removeStory, classes }) => (
   <Paper className={classes.root}>
     <Table className={classes.table}>
       <TableHead>
