@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function Search({ onChange, onSubmit, searchString }) {
+export default function Search({ onChange, onSubmit, value }) {
   const classes = useStyles();
 
   return (
@@ -38,11 +38,11 @@ export default function Search({ onChange, onSubmit, searchString }) {
         type="text"
         className={classes.input}
         placeholder="Search HackerNews API"
-        value={searchString}
+        value={value}
         onChange={onChange}
         inputProps={{ 'aria-label': 'Search Google Maps' }}
       />
-      <Divider className={classes.divider} />
+      <Divider className={classes.divider} component={'hr'} />
       <IconButton
         onClick={onSubmit}
         className={classes.iconButton}
