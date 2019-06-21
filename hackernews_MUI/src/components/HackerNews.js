@@ -152,3 +152,4 @@ export default class HackerNews extends Component {
     );
   }
 }
+export { Button };
