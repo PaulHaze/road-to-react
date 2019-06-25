@@ -8,7 +8,7 @@ const NewsDetail = ({
   author,
   points,
   comments,
-  removeStory
+  removeStory,
 }) => (
   <tr className="text-mdb-color darken-1 mt-5">
     <td>
@@ -30,7 +30,7 @@ const NewsDetail = ({
           minWidth: '30px',
           minHeight: '30px',
           padding: '5px',
-          verticalAlign: 'bottom'
+          verticalAlign: 'bottom',
         }}
         onClick={() => removeStory(id)}
         color="danger"

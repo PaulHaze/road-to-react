@@ -2,9 +2,6 @@ import React from 'react';
 import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import NewsDetail from './NewsDetail';
 
-// const isSearched = searchTerm => item =>
-//   item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//   item.author.toLowerCase().includes(searchTerm.toLowerCase());
 
 const NewsList = ({ result, removeStory }) => (
   <MDBTable responsiveSm striped>
@@ -22,8 +19,8 @@ const NewsList = ({ result, removeStory }) => (
       </tr>
     </MDBTableHead>
     <MDBTableBody>
-      {result &&
-        result.map(story => (
+      {result
+        && result.map(story => (
           <NewsDetail
             key={story.objectID}
             id={story.objectID}

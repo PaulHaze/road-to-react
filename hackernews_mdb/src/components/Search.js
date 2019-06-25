@@ -1,7 +1,7 @@
 import React from 'react';
 import { MDBIcon, MDBBtn } from 'mdbreact';
 
-const Search = ({ onChange, onSubmit, searchString, children }) => (
+const Search = ({ onChange, onSubmit, searchString }) => (
   <form onSubmit={onSubmit} className="input-group md-form form-sm form-1 pl-0">
     <div className="input-group-prepend">
       <span className="input-group-text purple lighten-3" id="basic-text1">
@@ -25,7 +25,7 @@ const Search = ({ onChange, onSubmit, searchString, children }) => (
             minWidth: '30px',
             minHeight: '30px',
             padding: '5px',
-            verticalAlign: 'bottom'
+            verticalAlign: 'bottom',
           }}
           size="sm"
           color="purple"
