@@ -46,8 +46,4 @@
     "plugin:react/recommended",
     "airbnb"
   ]
-  //  "extends": [
-  //    "eslint-config-airbnb",
-  //    "plugin:react/recommended"
-  //  ]
 }

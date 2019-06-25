@@ -15,6 +15,7 @@ import {
   PARAM_PAGE,
   PARAM_HPP,
 } from '../api/api_constants';
+import Loading from './Loading';
 
 
 export default class HackerNews extends Component {
@@ -25,6 +26,7 @@ export default class HackerNews extends Component {
       searchKey: '',
       searchString: DEFAULT_SEARCH,
       error: null,
+      isLoading: false,
     };
   }
 
@@ -82,10 +84,12 @@ export default class HackerNews extends Component {
         ...results,
         [searchKey]: { hits: updatedHits, page },
       },
+      isLoading: false,
     });
   };
 
   requestApiSearch = (searchTerm, page = 0) => {
+    this.setState({ isLoading: true });
     const searchUrl = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}
                        &${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`;
     axios(searchUrl)
@@ -94,9 +98,10 @@ export default class HackerNews extends Component {
   };
 
   render() {
-    const { results, searchKey, searchString, error } = this.state;
+    const { results, searchKey, searchString, error, isLoading } = this.state;
     const page = (results && results[searchKey] && results[searchKey].page) || 0;
     const list = (results && results[searchKey] && results[searchKey].hits) || [];
+    const tableHeader = isLoading ? <Loading /> : 'Results:';
     return (
       <MDBContainer>
         {/* SEARCH */}
@@ -113,7 +118,7 @@ export default class HackerNews extends Component {
         {/* RESULTS */}
         <MDBRow>
           <MDBCol md="12">
-            <h1 className="text-center">Results:</h1>
+            <h1 className="text-center">{tableHeader}</h1>
             {error
               ? (
                 <h3 className="text-center">
@@ -132,16 +137,22 @@ export default class HackerNews extends Component {
               )
             }
             <div className="interactions">
-              <MDBBtn
-                className="float-right"
-                onClick={() => this.requestApiSearch(searchKey, page + 1)}
-                color="purple lighten-5"
-                outline
-                size="sm"
-                href="#"
-              >
-                <i className="fas fa-arrow-right" />
-              </MDBBtn>
+              { isLoading
+                ? <Loading />
+                : (
+                  <MDBBtn
+                    className="float-right"
+                    onClick={() => this.requestApiSearch(searchKey, page + 1)}
+                    color="purple lighten-5"
+                    outline
+                    size="sm"
+                    href="#"
+                  >
+                    <i className="fas fa-arrow-right" />
+                  </MDBBtn>
+                )
+              }
+
               {page > 0
               && (
                 <MDBBtn
