@@ -18,7 +18,7 @@ export default class HackerNews extends Component {
     this.state = {
       result: null,
       pageNumber: 0,
-      searchString: ''
+      searchString: '',
     };
   }
 
