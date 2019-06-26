@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import axios from 'axios';
+import { sortBy } from 'lodash';
 import MyButton from './MyButton';
 
 import NewsList from './NewsList';
@@ -19,6 +20,13 @@ import {
 import Loading from './Loading';
 import withFeature from './withFeature';
 
+const SORTS = {
+  NONE: list => list,
+  TITLE: list => sortBy(list, 'title'),
+  AUTHOR: list => sortBy(list, 'author'),
+  COMMENTS: list => sortBy(list, 'num_comments').reverse(),
+  POINTS: list => sortBy(list, 'points').reverse(),
+};
 
 export default class HackerNews extends Component {
   constructor(props) {
@@ -29,6 +37,7 @@ export default class HackerNews extends Component {
       searchString: DEFAULT_SEARCH,
       error: null,
       isLoading: false,
+      sortKey: 'NONE',
     };
   }
 
@@ -39,7 +48,6 @@ export default class HackerNews extends Component {
     });
     this.requestApiSearch(searchString);
   };
-
 
   removeStory = (id) => {
     const { results, searchKey } = this.state;
@@ -66,6 +74,10 @@ export default class HackerNews extends Component {
       this.requestApiSearch(searchString);
     }
     e.preventDefault();
+  };
+
+  onSort = (sortKey) => {
+    this.setState({ sortKey });
   };
 
   needsToSearchApi = searchTerm => !this.state.results[searchTerm];
@@ -100,7 +112,7 @@ export default class HackerNews extends Component {
   };
 
   render() {
-    const { results, searchKey, searchString, error, isLoading } = this.state;
+    const { results, searchKey, searchString, error, isLoading, sortKey } = this.state;
     const page = (results && results[searchKey] && results[searchKey].page) || 0;
     const list = (results && results[searchKey] && results[searchKey].hits) || [];
     const tableHeader = isLoading ? <Loading /> : 'Results:';
@@ -135,6 +147,9 @@ export default class HackerNews extends Component {
               : (
                 <NewsList
                   result={list}
+                  SORTS={SORTS}
+                  sortKey={sortKey}
+                  onSort={this.onSort}
                   removeStory={this.removeStory}
                 />
               )
@@ -167,7 +182,6 @@ export default class HackerNews extends Component {
               )
               }
             </div>
-
           </MDBCol>
         </MDBRow>
       </MDBContainer>

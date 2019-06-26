@@ -1,7 +1,7 @@
 // API constants
 
 // sets the default amount of hits returned per page
-export const DEFAULT_HPP = '5';
+export const DEFAULT_HPP = '10';
 
 // the initial default serach term
 export const DEFAULT_SEARCH = 'gatsby';
