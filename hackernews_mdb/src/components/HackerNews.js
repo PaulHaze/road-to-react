@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import axios from 'axios';
+import MyButton from './MyButton';
 
 import NewsList from './NewsList';
 import Search from './Search';
@@ -16,6 +17,7 @@ import {
   PARAM_HPP,
 } from '../api/api_constants';
 import Loading from './Loading';
+import withFeature from './withFeature';
 
 
 export default class HackerNews extends Component {
@@ -102,6 +104,7 @@ export default class HackerNews extends Component {
     const page = (results && results[searchKey] && results[searchKey].page) || 0;
     const list = (results && results[searchKey] && results[searchKey].hits) || [];
     const tableHeader = isLoading ? <Loading /> : 'Results:';
+    const ButtonWithLoading = withFeature(MyButton);
     return (
       <MDBContainer>
         {/* SEARCH */}
@@ -137,21 +140,17 @@ export default class HackerNews extends Component {
               )
             }
             <div className="interactions">
-              { isLoading
-                ? <Loading />
-                : (
-                  <MDBBtn
-                    className="float-right"
-                    onClick={() => this.requestApiSearch(searchKey, page + 1)}
-                    color="purple lighten-5"
-                    outline
-                    size="sm"
-                    href="#"
-                  >
-                    <i className="fas fa-arrow-right" />
-                  </MDBBtn>
-                )
-              }
+              <ButtonWithLoading
+                isLoading={isLoading}
+                className="float-right"
+                onClick={() => this.requestApiSearch(searchKey, page + 1)}
+                color="purple lighten-5"
+                outline
+                size="sm"
+                href="#"
+              >
+                <i className="fas fa-arrow-right" />
+              </ButtonWithLoading>
 
               {page > 0
               && (
@@ -168,6 +167,7 @@ export default class HackerNews extends Component {
               )
               }
             </div>
+
           </MDBCol>
         </MDBRow>
       </MDBContainer>
