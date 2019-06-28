@@ -21,7 +21,7 @@ import Loading from './Loading';
 import withFeature from './withFeature';
 
 const SORTS = {
-  NONE: list => list,
+  NONE: table => table,
   TITLE: list => sortBy(list, 'title'),
   AUTHOR: list => sortBy(list, 'author'),
   COMMENTS: list => sortBy(list, 'num_comments').reverse(),
@@ -85,7 +85,8 @@ export default class HackerNews extends Component {
   setSearchTopStories = result => {
     const { hits, page } = result;
     const { searchKey, results } = this.state;
-    const oldHits = results && results[searchKey] ? results[searchKey].hits : [];
+    const oldHits =
+      results && results[searchKey] ? results[searchKey].hits : [];
 
     const updatedHits = [...oldHits, ...hits];
     this.setState({
@@ -107,9 +108,18 @@ export default class HackerNews extends Component {
   };
 
   render() {
-    const { results, searchKey, searchString, error, isLoading, sortKey } = this.state;
-    const page = (results && results[searchKey] && results[searchKey].page) || 0;
-    const list = (results && results[searchKey] && results[searchKey].hits) || [];
+    const {
+      results,
+      searchKey,
+      searchString,
+      error,
+      isLoading,
+      sortKey
+    } = this.state;
+    const page =
+      (results && results[searchKey] && results[searchKey].page) || 0;
+    const list =
+      (results && results[searchKey] && results[searchKey].hits) || [];
     const tableHeader = isLoading ? <Loading /> : 'Results:';
     const ButtonWithLoading = withFeature(MyButton);
     return (
