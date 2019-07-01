@@ -37,7 +37,8 @@ export default class HackerNews extends Component {
       searchString: DEFAULT_SEARCH,
       error: null,
       isLoading: false,
-      sortKey: 'NONE'
+      sortKey: 'NONE',
+      isReversed: false
     };
   }
 
