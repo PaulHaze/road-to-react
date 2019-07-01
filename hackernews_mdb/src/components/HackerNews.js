@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import axios from 'axios';
-import { sortBy } from 'lodash';
+import { sortBy } from '../../node_modules/lodash';
 import MyButton from './MyButton';
 
 import NewsList from './NewsList';

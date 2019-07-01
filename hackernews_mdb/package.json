@@ -20,7 +20,7 @@
     "remove-demo": "rimraf ./src/assets ./src/components ./src/pages ./src/Routes.js ./src/App.js ./src/index.css && npm run rename"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.2",
+    "babel-eslint": "10.0.1",
     "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^6.0.0",

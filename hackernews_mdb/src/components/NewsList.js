@@ -3,11 +3,7 @@ import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import NewsDetail from './NewsDetail';
 
 const Sort = ({ sortKey, onSort, children }) => (
-  <button
-    type="button"
-    className="btn btn-light btn-block"
-    onClick={() => onSort(sortKey)}
-  >
+  <button type="button" className="btn btn-light btn-block" onClick={() => onSort(sortKey)}>
     {children}
   </button>
 );
@@ -17,37 +13,24 @@ const NewsList = ({ result, SORTS, sortKey, onSort, removeStory }) => (
     <MDBTableHead style={{ justifyContent: 'space-between' }}>
       <tr className="grey-text">
         <th scope="col">
-          <Sort
-            sortKey="TITLE"
-            onSort={onSort}
-          >
+          <Sort sortKey="TITLE" onSort={onSort}>
             Title
           </Sort>
         </th>
         <th scope="col">
-          <Sort
-            sortKey="AUTHOR"
-            onSort={onSort}
-          >
+          <Sort sortKey="AUTHOR" onSort={onSort}>
             Author
           </Sort>
         </th>
         <th className="text-center" scope="col">
-          <Sort
-            sortKey="POINTS"
-            onSort={onSort}
-          >
+          <Sort sortKey="POINTS" onSort={onSort}>
             Points
           </Sort>
         </th>
         <th className="text-center" scope="col">
-          <Sort
-            sortKey="COMMENTS"
-            onSort={onSort}
-          >
+          <Sort sortKey="COMMENTS" onSort={onSort}>
             <i className="fas fa-comment-alt" />
           </Sort>
-
         </th>
         <th scope="col" />
       </tr>
@@ -64,8 +47,7 @@ const NewsList = ({ result, SORTS, sortKey, onSort, removeStory }) => (
           removeStory={removeStory}
           points={story.points}
         />
-      ))
-      }
+      ))}
       {/* {result */}
       {/*  && result.map(story => ( */}
       {/*    <NewsDetail */}
