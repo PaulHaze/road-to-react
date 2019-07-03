@@ -38,7 +38,7 @@ export default class HackerNews extends Component {
       error: null,
       isLoading: false,
       sortKey: 'NONE',
-      isReversed: false
+      isSortReversed: false
     };
   }
 
@@ -78,7 +78,8 @@ export default class HackerNews extends Component {
   };
 
   onSort = sortKey => {
-    this.setState({ sortKey });
+    const isSortReverse = this.state.sortKey === sortKey && !this.state.isSortReversed;
+    this.setState({ sortKey, isSortReverse });
   };
 
   needsToSearchApi = searchTerm => !this.state.results[searchTerm];
@@ -108,7 +109,15 @@ export default class HackerNews extends Component {
   };
 
   render() {
-    const { results, searchKey, searchString, error, isLoading, sortKey } = this.state;
+    const {
+      results,
+      searchKey,
+      searchString,
+      error,
+      isLoading,
+      sortKey,
+      isSortReverse
+    } = this.state;
     const page = (results && results[searchKey] && results[searchKey].page) || 0;
     const list = (results && results[searchKey] && results[searchKey].hits) || [];
     const tableHeader = isLoading ? <Loading /> : 'Results:';
@@ -144,6 +153,7 @@ export default class HackerNews extends Component {
                 SORTS={SORTS}
                 sortKey={sortKey}
                 onSort={this.onSort}
+                isSortReverse={isSortReverse}
                 removeStory={this.removeStory}
               />
             )}

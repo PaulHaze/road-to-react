@@ -23,13 +23,13 @@ table.table a {
   color: #203b61;
 }
 table.table thead th {
-  font-size: 0.8em;
+  font-size: 1.3em;
   font-weight: 400;
+  color: rgb(247, 242, 242);
 }
 .table td {
   vertical-align: middle;
 }
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
